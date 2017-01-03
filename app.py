@@ -31,32 +31,38 @@ def webhook():
 
 
 def processRequest(req):
-
-    BiblesAPI(os.getenv("BIBLES_API_KEY",""))
-    apiai_result = req.get("result")
-    print (apiai_result)
-    apiai_parameters = result.get("parameters")
-    print (apiai_parameters)
-    book_name = apiai_parameters.get("book")
-    print (book_name)
-    book_number = apiai_parameters.get("book-number")
-    print (book_number)
-    chapter = apiai_parameters.get("chapter")
-    print(chapter)
-    start_verse = apiai_parameters.get("start-verse")
-    print(start_verse)
-    end_verse = apiai_parameters.get("end-verse")
-    print (end_verse)
+    try:
+        BiblesAPI(os.getenv("BIBLES_API_KEY",""))
+        apiai_result = req.get("result")
+        print (apiai_result)
+        apiai_parameters = apiai_result.get("parameters")
+        print (apiai_parameters)
+        book_name = apiai_parameters.get("book")
+        print (book_name)
+        book_number = apiai_parameters.get("book-number")
+        print (book_number)
+        chapter = apiai_parameters.get("chapter")
+        print(chapter)
+        start_verse = apiai_parameters.get("start-verse")
+        print(start_verse)
+        end_verse = apiai_parameters.get("end-verse")
+        print (end_verse)
     
-    if( book_name is None or chapter is None):
-        return {}
-    if(start_verse is None):
-        start_verse = 1
+        if( book_name is None or chapter is None):
+            return {}
+        if(start_verse is None):
+            start_verse = 1
     
-    result = BiblesAPI.passages(str(book_number)+book_name,chapter,start_verse,end_verse)
+        result = BiblesAPI.passages(str(book_number)+book_name,chapter,start_verse,end_verse)
     
-    res = makeWebhookResult(data)
-    return res
+        res = makeWebhookResult(data)
+        return res
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        print "ERROR!",e
+        print "FINISHED TASKS"
+        raise e
 
 
 
