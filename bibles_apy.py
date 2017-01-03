@@ -44,7 +44,7 @@ class BiblesAPI(object):
         url = self._BIBLES_API_KEY+"passages.js" #+":"+book_id+"."+chapter_number+"/verses.js"
         
         paylod = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
-            "include_marginalia":true,
+            "include_marginalia":True,
             "q[]":q
         }
         print ("Get Passage",url,paylod)
