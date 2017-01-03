@@ -42,6 +42,11 @@ def processRequest(req):
         #print (apiai_result)
         apiai_parameters = apiai_result.get("parameters")
         #print (apiai_parameters)
+        search_phrase = apiai_parameters.get("search-phrase")
+        if(search_phrase):
+            data = bibleapi.search(search_phrase)
+            return makeSearchResult(data)
+            
         book_name = apiai_parameters.get("book")
         print (book_name,type(book_name))
         book_number = apiai_parameters.get("book-number")
@@ -82,7 +87,40 @@ def processRequest(req):
 
 
 
+def makeSearchResult(data):
+    response = data.get('response')
+    #print (response)
+    if response is None:
+        return makeDefaultResponse()
 
+    search = response.get('search')
+    #print (search)
+    if search is None:
+        return makeDefaultResponse()
+        
+    result = search.get('result')
+    #print (result)
+    if result is None:
+        return makeDefaultResponse()
+    
+    verses = result.get("verses")
+    speech = "Found "+str(len(verses))+"verses. "
+    
+    for(v in verses):
+        speech += v.reference+" "
+        speech += cleanPassage(v.text)
+        
+    print("Response:",speech)
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-bibles_org"
+    }
+    
+    
 def makeWebhookResult(data):
     #print("bible result",data)
     # body = data.get('body')
@@ -111,9 +149,9 @@ def makeWebhookResult(data):
     
     passage = passages[0]
 
-    passage_html = passage.get('text')
-    passage_html = passage_html.encode('ascii', 'ignore').decode('ascii')
-    passage_txt = Markup(passage_html).striptags()
+    #passage_html = passage.get('text')
+    #passage_html = passage_html.encode('ascii', 'ignore').decode('ascii')
+    passage_txt = cleanPassage(passage.get('text'))#Markup(passage_html).striptags()
     print passage_txt #.encode('ascii', 'ignore').decode('ascii')
     if (passage_txt is None):
         return makeDefaultResponse()
@@ -131,6 +169,12 @@ def makeWebhookResult(data):
         # "contextOut": [],
         "source": "apiai-bibles_org"
     }
+
+def cleanPassage(passage):
+    passage_html = passage.get('text')
+    passage_html = passage_html.encode('ascii', 'ignore').decode('ascii')
+    passage_txt = Markup(passage_html).striptags()
+    return passage_txt
 
 def makeDefaultResponse():
     print ("I didn't understand. You can say read John chapter 3 verse 16")
