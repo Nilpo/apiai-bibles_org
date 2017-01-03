@@ -38,7 +38,7 @@ def processRequest(req):
         apiai_parameters = apiai_result.get("parameters")
         #print (apiai_parameters)
         book_name = apiai_parameters.get("book")
-        print (book_name)
+        print (book_name,type(book_name))
         book_number = apiai_parameters.get("book-number")
         print (book_number)
         chapter = apiai_parameters.get("chapter")
@@ -48,12 +48,14 @@ def processRequest(req):
         end_verse = apiai_parameters.get("end-verse")
         print (end_verse)
     
-        if( book_name is None):
+        if(book_name is None):
             resolvedQuery = apiai_result.get("resolvedQuery")
             #for now lets assume 2nd
             queryParts = resolvedQuery.split(" ")
+            print (queryParts)
             if(len(queryParts) > 2):
                 book_name = queryParts[1]
+                print (book_name)
             else:
                 return {}
         if(chapter is None):
