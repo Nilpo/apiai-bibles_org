@@ -48,7 +48,7 @@ def processRequest(req):
         end_verse = apiai_parameters.get("end-verse")
         print (end_verse)
     
-        if(book_name is None):
+        if(not book_name):
             resolvedQuery = apiai_result.get("resolvedQuery")
             #for now lets assume 2nd
             queryParts = resolvedQuery.split(" ")
@@ -58,9 +58,9 @@ def processRequest(req):
                 print (book_name)
             else:
                 return {}
-        if(chapter is None):
+        if(not chapter):
             return {}
-        if(start_verse is None):
+        if(not start_verse):
             start_verse = 1
     
         data = bibleapi.passages(str(book_number)+book_name,chapter,start_verse,end_verse)
