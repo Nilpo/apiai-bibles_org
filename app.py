@@ -70,11 +70,11 @@ def processRequest(req):
 
 def makeWebhookResult(data):
     print("bible result",data)
-    body = data.get('body')
-    if body is None:
-        return {}
+    # body = data.get('body')
+#     if body is None:
+#         return {}
 
-    response = body.get('response')
+    response = data.get('response')
     if response is None:
         return {}
 
@@ -94,7 +94,7 @@ def makeWebhookResult(data):
 
     passage_html = passage.get('text')
     passage_txt = Markup(passage_html).striptags()
-    
+    print passage_txt
     if (passage_txt is None):
         return {}
 
