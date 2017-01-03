@@ -97,9 +97,9 @@ def makeWebhookResult(data):
     passage = passages[0]
 
     passage_html = passage.get('text')
-    print passage_html.encode('ascii', 'ignore').decode('ascii')
+    passage_html = passage_html.encode('ascii', 'ignore').decode('ascii')
     passage_txt = Markup(passage_html).striptags()
-    print passage_txt.encode('ascii', 'ignore').decode('ascii')
+    print passage_txt #.encode('ascii', 'ignore').decode('ascii')
     if (passage_txt is None):
         return {}
 

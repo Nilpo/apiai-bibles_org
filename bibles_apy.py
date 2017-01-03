@@ -41,11 +41,11 @@ class BiblesAPI(object):
         if(end_verse):
             q += "-"+str(end_verse)
             
-        url = self._API_URL+"passages.js" #+":"+book_id+"."+chapter_number+"/verses.js"
+        url = self._API_URL+"passages.js?q[]"+q #+":"+book_id+"."+chapter_number+"/verses.js"
         
         paylod = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
             "include_marginalia":True,
-            "q[]":q
+            #"q[]":q
         }
         print ("Get Passage",url,paylod)
         return self.doRequest(url,paylod)
