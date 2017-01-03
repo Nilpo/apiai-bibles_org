@@ -18,7 +18,7 @@ class BiblesAPI(object):
     def doRequest(self,url,payload={}):
         #payload = {'key1': 'value1', 'key2': 'value2'}
         
-        r = requests.get(url, params=payload, auth=(self.BIBLES_API_KEY, 'pass'))
+        r = requests.get(url, params=payload, auth=(self._BIBLES_API_KEY, 'pass'))
         #r.raise_for_status()
         if reqFormat == "json":
             return r.json()
@@ -28,7 +28,7 @@ class BiblesAPI(object):
     def verses(self,book_id,chapter_number):
         #GET /chapters/#{version_id}:#{book_id}.#{chapter_number}/verses.js?include_marginalia=true
         #https://bibles.org/v2/chapters/eng-KJVA:1Cor.2/verses.js
-        url = self._BIBLES_API_KEY+"chapters/eng-"+self._BIBLE_VERSION+":"+book_id+"."+str(chapter_number)+"/verses.js"
+        url = self._API_URL+"chapters/"+self._LANGUAGE+"-"+self._BIBLE_VERSION+":"+book_id+"."+str(chapter_number)+"/verses.js"
         return self.doRequest(url)
         
     def passages(self,book_name,chapter_number,start_verse,end_verse=None):
@@ -41,7 +41,7 @@ class BiblesAPI(object):
         if(end_verse):
             q += "-"+str(end_verse)
             
-        url = self._BIBLES_API_KEY+"passages.js" #+":"+book_id+"."+chapter_number+"/verses.js"
+        url = self._API_URL+"passages.js" #+":"+book_id+"."+chapter_number+"/verses.js"
         
         paylod = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
             "include_marginalia":True,
