@@ -69,34 +69,35 @@ def processRequest(req):
 
 
 def makeWebhookResult(data):
-    print("bible result",data)
+    #print("bible result",data)
     # body = data.get('body')
 #     if body is None:
 #         return {}
 
     response = data.get('response')
-    print (response)
+    #print (response)
     if response is None:
         return {}
 
     search = response.get('search')
-    print (search)
+    #print (search)
     if search is None:
         return {}
         
     result = search.get('result')
-    print (result)
+    #print (result)
     if result is None:
         return {}  
     
     passages = result.get('passages')
-    print (passages)
+    #print (passages)
     if passages is None:
         return {}  
     
     passage = passages[0]
 
     passage_html = passage.get('text')
+    print passage_html
     passage_txt = Markup(passage_html).striptags()
     print passage_txt
     if (passage_txt is None):
