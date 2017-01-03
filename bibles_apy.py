@@ -20,10 +20,9 @@ class BiblesAPI(object):
         
         r = requests.get(url, params=payload, auth=(self._BIBLES_API_KEY, 'pass'))
         #r.raise_for_status()
-        if reqFormat == "json":
-            return r.json()
+        return r.json()
 
-        return r.text
+        #return r.text
         
     def verses(self,book_id,chapter_number):
         #GET /chapters/#{version_id}:#{book_id}.#{chapter_number}/verses.js?include_marginalia=true
