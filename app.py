@@ -59,7 +59,7 @@ def processRequest(req):
             else:
                 return makeDefaultResponse()
         if(not chapter):
-            return {}
+            return makeDefaultResponse()
         if(not start_verse):
             start_verse = 1
     
@@ -129,6 +129,7 @@ def makeWebhookResult(data):
     }
 
 def makeDefaultResponse():
+    print ("I didn't understand. You can say read John chapter 3 verse 16")
     return {
         "speech": "I didn't understand. You can say read John chapter 3 verse 16",
         "displayText": "I didn't understand. You can say read John chapter 3 verse 16",
