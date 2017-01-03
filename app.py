@@ -13,6 +13,11 @@ from bibles_apy import BiblesAPI
 # Flask app should start in global layout
 app = Flask(__name__)
 
+@app.route("/",methods=['GET'])
+def main():
+    
+    iframe = '<iframe width="350" height="430" src="https://console.api.ai/api-client/demo/embedded/thebible"></iframe>'
+    return make_response('<!DOCTYPE html><html><head><title>The Bible</title></head><body>'+iframe+'</body></html>')
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -117,8 +122,7 @@ def makeWebhookResult(data):
 
     speech = passage_txt
 
-    print("Response:")
-    print(speech)
+    print("Response:",speech)
 
     return {
         "speech": speech,
