@@ -7,6 +7,8 @@ import os
 from flask import Flask
 from flask import request
 from flask import make_response
+from flask import Markup
+from bibles_apy import BiblesAPI
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -29,56 +31,63 @@ def webhook():
 
 
 def processRequest(req):
-    if req.get("result").get("action") != "yahooWeatherForecast":
+
+
+    BiblesAPI(os.getenv("BIBLES_API_KEY",""))
+    apiai_result = req.get("result")
+    apiai_parameters = result.get("parameters")
+    book_name = apiai_parameters.get("book")
+    book_number = apiai_parameters.get("book-number")
+    chapter = apiai_parameters.get("chapter")
+    start_verse = apiai_parameters.get("start-verse")
+    end_verse = apiai_parameters.get("end-verse")
+    
+    if( book_name is None or chapter is None):
         return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    yql_query = makeYqlQuery(req)
-    if yql_query is None:
-        return {}
-    yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
-    result = urllib.urlopen(yql_url).read()
-    data = json.loads(result)
+    if(start_verse is None):
+        start_verse = 1
+    
+    result = BiblesAPI.passages(str(book_number)+book_name,chapter,start_verse,end_verse)
+    
     res = makeWebhookResult(data)
     return res
 
 
-def makeYqlQuery(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-    city = parameters.get("geo-city")
-    if city is None:
-        return None
 
-    return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
 
 def makeWebhookResult(data):
-    query = data.get('query')
-    if query is None:
+    body = data.get('body')
+    if body is None:
         return {}
 
-    result = query.get('results')
+    response = body.get('response')
+    if response is None:
+        return {}
+
+    search = response.get('search')
+    if search is None:
+        return {}
+        
+    result = search.get('result')
     if result is None:
-        return {}
+        return {}  
+    
+    passages = result.get('result')
+    if passages is None:
+        return {}  
+    
+    passage = passages[0]
 
-    channel = result.get('channel')
-    if channel is None:
-        return {}
-
-    item = channel.get('item')
-    location = channel.get('location')
-    units = channel.get('units')
-    if (location is None) or (item is None) or (units is None):
-        return {}
-
-    condition = item.get('condition')
-    if condition is None:
+    passage_html = passage.get('text')
+    passage_txt = Markup(passage_html).striptags()
+    
+    if (passage_txt is None):
         return {}
 
     # print(json.dumps(item, indent=4))
 
-    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
-             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
+    speech = passage_txt
 
     print("Response:")
     print(speech)
@@ -88,7 +97,7 @@ def makeWebhookResult(data):
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
+        "source": "apiai-bibles_org"
     }
 
 
