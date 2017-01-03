@@ -75,18 +75,22 @@ def makeWebhookResult(data):
 #         return {}
 
     response = data.get('response')
+    print (response)
     if response is None:
         return {}
 
     search = response.get('search')
+    print (search)
     if search is None:
         return {}
         
     result = search.get('result')
+    print (result)
     if result is None:
         return {}  
     
-    passages = result.get('result')
+    passages = result.get('passages')
+    print (passages)
     if passages is None:
         return {}  
     
