@@ -19,7 +19,7 @@ class BiblesAPI(object):
         #payload = {'key1': 'value1', 'key2': 'value2'}
         
         r = requests.get(url, params=payload, auth=(self._BIBLES_API_KEY, 'pass'))
-        print r
+        print (r.url,r.headers)
         #r.raise_for_status()
         return r.json()
 
