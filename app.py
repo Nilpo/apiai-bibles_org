@@ -106,7 +106,7 @@ def makeSearchResult(data):
     verses = result.get("verses")
     speech = "Found "+str(len(verses))+"verses. "
     
-    for(v in verses):
+    for v in verses:
         speech += v.reference+" "
         speech += cleanPassage(v.text)
         
