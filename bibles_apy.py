@@ -13,12 +13,13 @@ class BiblesAPI(object):
     def __init__(self,api_key,bible_version="ESV"):
         self._BIBLES_API_KEY = api_key;
         self._BIBLE_VERSION = bible_version;
+        print ("Bibles API Key",self._BIBLES_API_KEY)
         
     def doRequest(self,url,paylod={}):
         #payload = {'key1': 'value1', 'key2': 'value2'}
         
         r = requests.get(url, params=payload, auth=(self.BIBLES_API_KEY, 'pass'))
-        r.raise_for_status()
+        #r.raise_for_status()
         if reqFormat == "json":
             return r.json()
 
@@ -41,9 +42,10 @@ class BiblesAPI(object):
             q += "-"+str(end_verse)
             
         url = self._BIBLES_API_KEY+"passages.js" #+":"+book_id+"."+chapter_number+"/verses.js"
+        
         paylod = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
             "include_marginalia":true,
             "q[]":q
         }
-        
+        print ("Get Passage",url,paylod)
         return self.doRequest(url,paylod)
