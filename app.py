@@ -57,7 +57,7 @@ def processRequest(req):
                 book_name = queryParts[1]
                 print (book_name)
             else:
-                return {}
+                return makeDefaultResponse()
         if(not chapter):
             return {}
         if(not start_verse):
@@ -72,7 +72,7 @@ def processRequest(req):
         traceback.print_exc()
         print "ERROR!",e
         print "FINISHED TASKS"
-        raise e
+        return makeDefaultResponse()
 
 
 
@@ -87,22 +87,22 @@ def makeWebhookResult(data):
     response = data.get('response')
     #print (response)
     if response is None:
-        return {}
+        return makeDefaultResponse()
 
     search = response.get('search')
     #print (search)
     if search is None:
-        return {}
+        return makeDefaultResponse()
         
     result = search.get('result')
     #print (result)
     if result is None:
-        return {}  
+        return makeDefaultResponse() 
     
     passages = result.get('passages')
     #print (passages)
     if (not passages or len(passages) == 0):
-        return {}  
+        return makeDefaultResponse()
     
     passage = passages[0]
 
@@ -111,7 +111,7 @@ def makeWebhookResult(data):
     passage_txt = Markup(passage_html).striptags()
     print passage_txt #.encode('ascii', 'ignore').decode('ascii')
     if (passage_txt is None):
-        return {}
+        return makeDefaultResponse()
 
     # print(json.dumps(item, indent=4))
 
@@ -128,6 +128,14 @@ def makeWebhookResult(data):
         "source": "apiai-bibles_org"
     }
 
+def makeDefaultResponse():
+    return {
+        "speech": "I didn't understand. You can say read John chapter 3 verse 16",
+        "displayText": "I didn't understand. You can say read John chapter 3 verse 16",
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-bibles_org"
+    }
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
