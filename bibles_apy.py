@@ -15,7 +15,7 @@ class BiblesAPI(object):
         self._BIBLE_VERSION = bible_version;
         print ("Bibles API Key",self._BIBLES_API_KEY)
         
-    def doRequest(self,url,paylod={}):
+    def doRequest(self,url,payload={}):
         #payload = {'key1': 'value1', 'key2': 'value2'}
         
         r = requests.get(url, params=payload, auth=(self.BIBLES_API_KEY, 'pass'))
