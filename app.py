@@ -48,7 +48,15 @@ def processRequest(req):
         end_verse = apiai_parameters.get("end-verse")
         print (end_verse)
     
-        if( book_name is None or chapter is None):
+        if( book_name is None):
+            resolvedQuery = apiai_result.get("resolvedQuery")
+            #for now lets assume 2nd
+            queryParts = resolvedQuery.split(" ")
+            if(len(queryParts) > 2):
+                book_name = queryParts[1]
+            else:
+                return {}
+        if(chapter is None):
             return {}
         if(start_verse is None):
             start_verse = 1
