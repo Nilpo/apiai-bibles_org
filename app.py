@@ -32,7 +32,7 @@ def webhook():
 
 def processRequest(req):
     try:
-        BiblesAPI(os.getenv("BIBLES_API_KEY",""))
+        bibleapi = BiblesAPI(os.getenv("BIBLES_API_KEY",""))
         apiai_result = req.get("result")
         print (apiai_result)
         apiai_parameters = apiai_result.get("parameters")
@@ -53,7 +53,7 @@ def processRequest(req):
         if(start_verse is None):
             start_verse = 1
     
-        result = BiblesAPI.passages(str(book_number)+book_name,chapter,start_verse,end_verse)
+        result = bibleapi.passages(str(book_number)+book_name,chapter,start_verse,end_verse)
     
         res = makeWebhookResult(data)
         return res
