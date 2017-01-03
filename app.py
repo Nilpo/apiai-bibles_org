@@ -101,7 +101,7 @@ def makeWebhookResult(data):
     
     passages = result.get('passages')
     #print (passages)
-    if passages is None:
+    if (not passages or len(passages) == 0):
         return {}  
     
     passage = passages[0]
