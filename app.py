@@ -172,7 +172,7 @@ def cleanPassage(passage_raw):
     passage_html = passage_raw.encode('ascii', 'ignore').decode('ascii')
     #remove the heading
     print passage_html
-    heading_regex = r'<h3.*?>\d+</h3>'
+    heading_regex = r'<h3.*?>.*?</h3>'
     passage_html = re.sub(heading_regex,"",passage_html,1)
     print passage_html
     #remove first vers number 
