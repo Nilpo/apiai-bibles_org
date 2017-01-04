@@ -171,11 +171,14 @@ def makeWebhookResult(data):
 def cleanPassage(passage_raw):
     passage_html = passage_raw.encode('ascii', 'ignore').decode('ascii')
     #remove the heading
+    print passage_html
     heading_regex = r'<h3.*?>\d+</h3>'
     passage_html = re.sub(heading_regex,"",passage_html,1)
+    print passage_html
     #remove first vers number 
     verse_num_regex = r'<sup.*?>\d+</sup>'
     passage_html = re.sub(verse_num_regex,"",passage_html,1)
+    print passage_html
     passage_txt = Markup(passage_html).striptags()
     return passage_txt
 
