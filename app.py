@@ -118,9 +118,14 @@ def makeSearchResult(data):
     else:
         speech += " verse. "
     
+    if(total > 3):
+        verses = random.sample(3, verses)
+        speech += "Reading three of them. "
+    
     for v in verses:
         speech += v['reference']+" "
         speech += cleanPassage(v['text'])
+    
         
     print("Response:",speech)
 
