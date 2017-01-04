@@ -170,9 +170,8 @@ def makeWebhookResult(data):
         "source": "apiai-bibles_org"
     }
 
-def cleanPassage(passage):
-    passage_html = passage.get('text')
-    passage_html = passage_html.encode('ascii', 'ignore').decode('ascii')
+def cleanPassage(passage_raw):
+    passage_html = passage_raw.encode('ascii', 'ignore').decode('ascii')
     passage_txt = Markup(passage_html).striptags()
     return passage_txt
 
