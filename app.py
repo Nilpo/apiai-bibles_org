@@ -106,7 +106,10 @@ def makeSearchResult(data):
         return makeDefaultResponse()
     
     verses = result.get("verses")
-    speech = "Found "+str(len(verses))+"verses. "
+    if(not verses):
+        return makeDefaultResponse("Hmmm. I cannot seem to find any verses.")
+    
+    speech = "Found "+str(len(verses))+" verses. "
     
     for v in verses:
         speech += v['reference']+" "
