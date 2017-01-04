@@ -29,11 +29,11 @@ class BiblesAPI(object):
         #GET /chapters/#{version_id}:#{book_id}.#{chapter_number}/verses.js?include_marginalia=true
         #https://bibles.org/v2/chapters/eng-KJVA:1Cor.2/verses.js
         url = self._API_URL+"chapters/"+self._LANGUAGE+"-"+self._BIBLE_VERSION+":"+book_id+"."+str(chapter_number)+"/verses.js"
-        paylod = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
+        payload = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
             "include_marginalia":True,
             #"q[]":q
         }
-        return self.doRequest(url,paylod)
+        return self.doRequest(url,payload)
         
     def passages(self,book_name,chapter_number,start_verse,end_verse=None):
         # GET /passages.xml?q[]=#{passage_specifier_list}
@@ -47,20 +47,27 @@ class BiblesAPI(object):
             
         url = self._API_URL+"passages.js?q[]="+q #+":"+book_id+"."+chapter_number+"/verses.js"
         
-        paylod = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
+        payload = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
             "include_marginalia":True,
             #"q[]":q
         }
-        print ("Get Passage",url,paylod)
-        return self.doRequest(url,paylod)
+        print ("Get Passage",url,payload)
+        return self.doRequest(url,payload)
         
     def search(self,search_phrase):
         
         url = self._API_URL+"search.js"
         
-        paylod = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
+        payload = {"version":self._LANGUAGE+"-"+self._BIBLE_VERSION,
             "include_marginalia":True,
             "query":search_phrase
         }
-        print ("Get Passage",url,paylod)
-        return self.doRequest(url,paylod)
+        print ("Get Passage",url,payload)
+        return self.doRequest(url,payload)
+        
+    def votd(self):
+        #https://labs.bible.org/api/?passage=votd&type=json&version=eng-ESV
+        url = "https://labs.bible.org/api/"
+        payload = {"passage":"votd","type":"json","version":"eng-ESV"}
+        return self.doRequest(url,payload)
+        

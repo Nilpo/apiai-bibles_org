@@ -38,6 +38,10 @@ def processRequest(req):
         bibleapi = BiblesAPI(os.getenv("BIBLES_API_KEY",""))
         apiai_result = req.get("result")
         #print (apiai_result)
+        apiai_action = apiai_result.get("action")
+        if(apiai_action == "lookup.votd"):
+            data = bibleapi.votd()
+            return makeVOTDResult(data)
         apiai_parameters = apiai_result.get("parameters")
         #print (apiai_parameters)
         search_phrase = apiai_parameters.get("search-phrase")
@@ -168,6 +172,24 @@ def makeWebhookResult(data):
         "source": "apiai-bibles_org"
     }
 
+def makeVOTDResult(data):
+    if(len(data) == 0):
+        return makeDefaultResponse("Apologies could not find verse of the day.")
+    #data is an array: {bookname,chapter,verse, text }
+    speech = "The Verse of the day is "
+    ref = data[0]['bookname']+" chapter "+str(data[0]['chapter'])+" verse "+str(data[0].verse)
+    if(len(data) > 1):
+        ref += " to "+str(data[len(data)-1].verse)
+    
+    speech += ref+". "
+    for i,d in enumerate(data):
+        if(i > 0):
+            speech += str(d.verse)+" "
+        speech += d.text+" "
+        
+    return makeDefaultResponse(speech)
+        
+
 def cleanPassage(passage_raw):
     passage_html = passage_raw.encode('ascii', 'ignore').decode('ascii')
     #remove the heading
@@ -182,11 +204,14 @@ def cleanPassage(passage_raw):
     passage_txt = Markup(passage_html).striptags()
     return passage_txt
 
-def makeDefaultResponse():
-    print ("I didn't understand. You can say read John chapter 3 verse 16")
+def makeDefaultResponse(other_resp=None):
+    if(not other_resp):
+        other_resp = "I didn't understand. You can say read John chapter 3 verse 16"
+    
+    print (other_resp)
     return {
-        "speech": "I didn't understand. You can say read John chapter 3 verse 16",
-        "displayText": "I didn't understand. You can say read John chapter 3 verse 16",
+        "speech": other_resp,
+        "displayText": other_resp,
         # "data": data,
         # "contextOut": [],
         "source": "apiai-bibles_org"
