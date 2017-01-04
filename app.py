@@ -124,7 +124,7 @@ def makeSearchResult(data):
     
     for v in verses:
         speech += v['reference']+" "
-        speech += cleanPassage(v['text'])
+        speech += cleanPassage(v['text'])+" "
     
         
     print("Response:",speech)
