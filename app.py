@@ -108,7 +108,7 @@ def makeSearchResult(data):
     summary = result.get("summary")
     total = summary.get("total",0)
     
-    verses = result.get("verses")
+    verses = result.get("verses",[])
     #if(not verses):
     #    return makeDefaultResponse("Hmmm. I cannot seem to find any verses.")
     
