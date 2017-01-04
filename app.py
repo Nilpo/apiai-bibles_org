@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import urllib
-import json
-import os
+import urllib, json, os,re
 
 from flask import Flask
 from flask import request
@@ -172,6 +170,9 @@ def makeWebhookResult(data):
 
 def cleanPassage(passage_raw):
     passage_html = passage_raw.encode('ascii', 'ignore').decode('ascii')
+    #remove first vers number 
+    verse_num_regex = r'<sup.*?>\d+</sup>'
+    passage_html = re.sub(verse_num_regex,"",passage_html,1)
     passage_txt = Markup(passage_html).striptags()
     return passage_txt
 
