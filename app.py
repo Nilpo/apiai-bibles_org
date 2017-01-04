@@ -105,11 +105,18 @@ def makeSearchResult(data):
     if result is None:
         return makeDefaultResponse()
     
-    verses = result.get("verses")
-    if(not verses):
-        return makeDefaultResponse("Hmmm. I cannot seem to find any verses.")
+    summary = result.get("summary")
+    total = summary.get("total",0)
     
-    speech = "Found "+str(len(verses))+" verses. "
+    verses = result.get("verses")
+    #if(not verses):
+    #    return makeDefaultResponse("Hmmm. I cannot seem to find any verses.")
+    
+    speech = "Found "+str(total)
+    if(total != 1):
+        speech += " verses. "
+    else:
+        speech += " verse. "
     
     for v in verses:
         speech += v['reference']+" "
