@@ -119,7 +119,7 @@ def makeSearchResult(data):
         speech += " verse. "
     
     if(total > 3):
-        verses = random.sample(3, verses)
+        verses = random.sample(verses, 3)
         speech += "Reading three of them. "
     
     for v in verses:
