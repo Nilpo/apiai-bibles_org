@@ -49,7 +49,7 @@ def processRequest(req):
             data = bibleapi.search(search_phrase)
             return makeSearchResult(data)
             
-        book_name = apiai_parameters.get("book")
+        book_name = apiai_parameters.get("bible-book")
         print (book_name,type(book_name))
         book_number = apiai_parameters.get("book-number")
         print (book_number)
