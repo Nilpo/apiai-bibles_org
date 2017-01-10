@@ -223,7 +223,10 @@ def makeDefaultResponse(other_resp=None):
     if(not other_resp):
         other_resp = "I didn't understand. You can say read John chapter 3 verse 16"
     
-    print (other_resp)
+    try:
+        print (other_resp.encode("utf-8"))
+    except:
+        print (other_resp)
     return {
         "speech": other_resp,
         "displayText": other_resp,
