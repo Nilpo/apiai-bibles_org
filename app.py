@@ -40,7 +40,8 @@ def processRequest(req):
         apiai_parameters = apiai_result.get("parameters")
         
         bible_version = apiai_parameters.get("bible-version","ESV")
-        bibleapi.bible_version = bible_version
+        if(bible_version):
+            bibleapi.bible_version = bible_version
         #print (apiai_result)
         apiai_action = apiai_result.get("action")
         if(apiai_action == "lookup.votd"):
