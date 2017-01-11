@@ -14,7 +14,15 @@ class BiblesAPI(object):
         self._BIBLES_API_KEY = api_key;
         self._BIBLE_VERSION = bible_version;
         print ("Bibles API Key",self._BIBLES_API_KEY)
-        
+    
+    @property
+    def bible_version(self):
+        return self._BIBLE_VERSION
+
+    @bible_version.setter
+    def bible_version(self,value):
+        self._BIBLE_VERSION = value
+    
     def doRequest(self,url,payload={}):
         #payload = {'key1': 'value1', 'key2': 'value2'}
         

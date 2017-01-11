@@ -13,3 +13,17 @@ Read the specified Bible passage [Bibles.org API](https://bibles.org/pages/api/d
 
 The service packs the result in the Api.ai webhook-compatible response JSON and returns it to Api.ai.
 
+### English Versions
+
+ - eng-AMP Amplified Bible
+ - eng-CEV Contemporary English Version (US Version)
+ - eng-CEVD Contemporary English Version (US Version)
+ - eng-CEVUK Contemporary English Version (Anglicised Version)
+ - eng-ESV English Standard Version
+ - eng-GNBDC Good News Bible (Anglicised)
+ - eng-GNTD Good News Translation (US Version)
+ - eng-KJV King James Version
+ - eng-KJVA King James Version with Apocrypha, American Edition
+ - eng-MSG The Message
+ - eng-NASB New American Standard Bible
+ 

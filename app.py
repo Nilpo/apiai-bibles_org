@@ -37,12 +37,16 @@ def processRequest(req):
     try:
         bibleapi = BiblesAPI(os.getenv("BIBLES_API_KEY",""))
         apiai_result = req.get("result")
+        apiai_parameters = apiai_result.get("parameters")
+        
+        bible_version = apiai_parameters.get("bible-version","ESV")
+        bibleapi.bible_version = bible_version
         #print (apiai_result)
         apiai_action = apiai_result.get("action")
         if(apiai_action == "lookup.votd"):
             data = bibleapi.votd()
             return makeVOTDResult(data)
-        apiai_parameters = apiai_result.get("parameters")
+        
         #print (apiai_parameters)
         search_phrase = apiai_parameters.get("search-phrase")
         if(search_phrase):
