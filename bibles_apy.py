@@ -76,6 +76,6 @@ class BiblesAPI(object):
     def votd(self):
         #https://labs.bible.org/api/?passage=votd&type=json&version=eng-ESV
         url = "https://labs.bible.org/api/"
-        payload = {"passage":"votd","type":"json","version":"eng-ESV"}
+        payload = {"passage":"votd","type":"json","version":"eng-"+self._BIBLE_VERSION}
         return self.doRequest(url,payload)
         
