@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import urllib, json, os,re, random
+import urllib, json, os, re, random
 
 from flask import Flask
 from flask import request
@@ -87,8 +87,8 @@ def processRequest(req):
     except Exception as e:
         import traceback
         traceback.print_exc()
-        print "ERROR!",e
-        print "FINISHED TASKS"
+        print("ERROR!",e)
+        print("FINISHED TASKS")
         return makeDefaultResponse()
 
 
