@@ -46,7 +46,7 @@ def processRequest(req):
         apiai_action = apiai_result.get("action")
         if(apiai_action == "lookup.votd"):
             data = bibleapi.votd()
-            return makeVOTDResult(data)
+            return makeVOTDResult(data, bible_version)
         
         #print(apiai_parameters)
         search_phrase = apiai_parameters.get("search-phrase")
@@ -192,7 +192,7 @@ def makeWebhookResult(data):
         "source": "apiai-bibles_org"
     }
 
-def makeVOTDResult(data):
+def makeVOTDResult(data, version):
     if(len(data) == 0):
         return makeDefaultResponse("Apologies could not find verse of the day.")
     #data is an array: {bookname,chapter,verse, text }
@@ -201,11 +201,11 @@ def makeVOTDResult(data):
     if(len(data) > 1):
         ref += "-"+str(data[len(data)-1]['verse'])
     
-    speech += ref+".\n\n"
+    speech += ref+".\n\n"+'"'
     for i,d in enumerate(data):
         if(i > 0):
             speech += str(d['verse'])+" "
-        speech += d['text']+" "
+        speech += d['text']+'" '+version
         
     return makeDefaultResponse(speech)
         
