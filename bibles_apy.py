@@ -14,6 +14,7 @@ class BiblesAPI(object):
         self._BIBLES_API_KEY = api_key;
         self._BIBLE_VERSION = bible_version;
         print ("Bibles API Key",self._BIBLES_API_KEY)
+        print ("Bible version: ",self._BIBLE_VERSION)
     
     @property
     def bible_version(self):
