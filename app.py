@@ -197,11 +197,11 @@ def makeVOTDResult(data):
         return makeDefaultResponse("Apologies could not find verse of the day.")
     #data is an array: {bookname,chapter,verse, text }
     speech = "The Verse of the day is "
-    ref = data[0]['bookname']+" chapter "+str(data[0]['chapter'])+" verse "+str(data[0]['verse'])
+    ref = data[0]['bookname']+" "+str(data[0]['chapter'])+":"+str(data[0]['verse'])
     if(len(data) > 1):
-        ref += " to "+str(data[len(data)-1]['verse'])
+        ref += "-"+str(data[len(data)-1]['verse'])
     
-    speech += ref+". "
+    speech += ref+".\n\n"
     for i,d in enumerate(data):
         if(i > 0):
             speech += str(d['verse'])+" "
