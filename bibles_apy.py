@@ -1,10 +1,10 @@
 
-import requests
+import requests, os
 
 
 class BiblesAPI(object):
     
-    _BIBLES_API_KEY = ""
+    _BIBLES_API_KEY = os.environ['BIBLES_API_KEY']
     _API_URL = "https://bibles.org/v2/"
     _BIBLE_VERSION = "ESV"
     _LANGUAGE = "eng"
